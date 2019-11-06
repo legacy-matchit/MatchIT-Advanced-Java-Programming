@@ -6,12 +6,15 @@ package textproc;
  */
 public interface TextProcessor {
 
-	/** Anropas när ett ord lästs in. Metoden ska uppdatera statistiken därefter. */
+	/**
+	 * Called when a word is read.
+	 * The method will then update the statistics.
+	 */
 	void process(String w);
 
 	/**
-	 * Anropas när samtliga ord i sekvensen lästs in. Metoden ska skriva ut
-	 * en sammanställning av statistiken.
+	 * Method called when all the words in the sequence are read.
+	 * The method should print a readable representation of the statistics.
 	 */
 	void report();
 }
