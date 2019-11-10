@@ -1,34 +1,35 @@
 package textproc;
 
 import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
+/** D5 implement MultiWordCounter Class**/
 public class MultiWordCounter implements TextProcessor {
 
-    private String [] landscapes;
-    private HashMap<String ,Integer> m;
-    public MultiWordCounter(String [] landscapes){
-        this.landscapes = landscapes;
-        m = new HashMap<>();
+    private String [] words;
+    private Map<String,SingleWordCounter> map;
+
+    public MultiWordCounter(String [] words){
+        this.words = words; // 찾을 단어 리스트
+        map = new HashMap<>();
+        for(int i = 0; i < words.length; i++){
+            map.put(words[i],new SingleWordCounter(words[i]));// SingleWordCounter 클래스를 갖는 HashMap 초기
+        }
     }
 
+    /** Key is finding word and Value is SingleWordCounter object **/
     @Override
     public void process(String w) {
-        for(int i = 0; i < landscapes.length; i++){
-            if(landscapes[i].equals(w)){
-                int nbr = 0;
-                if(m.containsKey(w)){
-                    nbr = m.get(w);
-                }
-                nbr++;
-                m.put(w,nbr);
-            }
+        for(String key : map.keySet()){
+            map.get(key).process(w); // 프로세스 메서드를 호출해서 찾는 단어의 카운트를 증가시킴.
         }
     }
 
     @Override
     public void report() {
-        for (String key : m.keySet()){
-            System.out.println(key + "  " + m.get(key));
+        for (String key : map.keySet()){
+            map.get(key).report(); // 리포트 메서드를 호출해서 찾는 단어의 카운트를 프린트함.
         }
     }
 }
