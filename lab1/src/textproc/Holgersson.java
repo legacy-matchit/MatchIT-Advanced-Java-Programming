@@ -16,8 +16,7 @@ public class Holgersson {
 
 	public static void main(String[] args) throws FileNotFoundException {
 
-        long t0 = System.nanoTime();
-
+		long t0 = System.nanoTime();
 
         /** D4 list of TextProcessor for finding each word **/
 		ArrayList<TextProcessor> textProcessors = new ArrayList<>(); // 배열에 TextProcessor 인터페이스 타입의 요소를 담는다
@@ -35,7 +34,7 @@ public class Holgersson {
 			stopwords.add(word);
 		}
 		scanner.close();
-		TextProcessor r = new GeneralWordCounter(stopwords);
+		TextProcessor r = new GeneralWordCounter(stopwords,true);
 
 
 
@@ -71,8 +70,10 @@ public class Holgersson {
 		r.report(); /** D8 result **/
 
 
-        System.out.println("----------");
-        long t1 = System.nanoTime();
-        System.out.println("Time: " + (t1 - t0) / 1000000.0 + " ms");
+		System.out.println("----------");
+		long t1 = System.nanoTime();
+		System.out.println("Time Map: " + (t1 - t0) / 1000000.0 + " ms");
+
 	}
+
 }
