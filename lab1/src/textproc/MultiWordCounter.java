@@ -7,11 +7,9 @@ import java.util.Set;
 /** D5 implement MultiWordCounter Class**/
 public class MultiWordCounter implements TextProcessor {
 
-    private String [] words;
     private Map<String,SingleWordCounter> map;
 
     public MultiWordCounter(String [] words){
-        this.words = words; // 찾을 단어 리스트
         map = new HashMap<>();
         for(int i = 0; i < words.length; i++){
             map.put(words[i],new SingleWordCounter(words[i]));// SingleWordCounter 클래스를 갖는 HashMap 초기

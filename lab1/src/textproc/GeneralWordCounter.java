@@ -41,7 +41,7 @@ public class GeneralWordCounter implements TextProcessor {
                 n = hashMap.get(w);
                 n++;
                 hashMap.put(w,n);
-            }else{
+            }else{ //
                 hashMap.put(w,n);
             }
         }

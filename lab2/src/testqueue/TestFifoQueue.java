@@ -5,8 +5,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import queue_delegate.FifoQueue;
-//import queue_singlelinkedlist.FifoQueue;
+//import queue_delegate.FifoQueue;
+import queue_singlelinkedlist.FifoQueue;
 
 import java.util.NoSuchElementException;
 import java.util.Queue;
@@ -29,7 +29,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test if a newly created queue is empty.
+	 * queue_singlelinkedlist.Test if a newly created queue is empty.
 	 */
 	@Test
 	public final void testNewFifoQueue() {
@@ -37,7 +37,7 @@ public class TestFifoQueue {
 		assertTrue(myIntQueue.size() == 0);
 	}
 
-	/** Test a single offer followed by a single peek. */
+	/** queue_singlelinkedlist.Test a single offer followed by a single peek. */
 	@Test
 	public final void testPeek() {
 		myIntQueue.offer(1);
@@ -47,7 +47,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test a single offer followed by a single poll.
+	 * queue_singlelinkedlist.Test a single offer followed by a single poll.
 	 */
 	@Test
 	public final void testPoll() {
@@ -58,7 +58,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test peek of empty queue.
+	 * queue_singlelinkedlist.Test peek of empty queue.
 	 */
 	@Test
 	public final void testPeekOfEmpty() {
@@ -66,7 +66,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test poll of empty queue.
+	 * queue_singlelinkedlist.Test poll of empty queue.
 	 */
 	@Test
 	public final void testPollOfEmpty() {
@@ -74,7 +74,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test that implementation works for a queue of strings.
+	 * queue_singlelinkedlist.Test that implementation works for a queue of strings.
 	 */
 	@Test
 	public final void testStringQueue() {
@@ -90,7 +90,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test that polling gives elements in right order.
+	 * queue_singlelinkedlist.Test that polling gives elements in right order.
 	 */
 	@Test
 	public final void testOrder() {
@@ -107,7 +107,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test that polling all elements gives an empty queue.
+	 * queue_singlelinkedlist.Test that polling all elements gives an empty queue.
 	 */
 	@Test
 	public final void testMakeQueueEmpty() {
@@ -129,7 +129,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test iterator on empty queue.
+	 * queue_singlelinkedlist.Test iterator on empty queue.
 	 */
 	@Test
 	public void testIteratorEmptyQueue() {
@@ -144,7 +144,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test iterator on non empty queue.
+	 * queue_singlelinkedlist.Test iterator on non empty queue.
 	 */
 	@Test
 	public void testIteratorNonEmptyQueue() {
@@ -168,7 +168,7 @@ public class TestFifoQueue {
 	}
 
 	/**
-	 * Test iterator multiple times, to ensure that the iterator does not modify the
+	 * queue_singlelinkedlist.Test iterator multiple times, to ensure that the iterator does not modify the
 	 * queue.
 	 */
 	@Test

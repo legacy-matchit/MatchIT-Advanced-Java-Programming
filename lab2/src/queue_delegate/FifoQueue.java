@@ -2,6 +2,7 @@ package queue_delegate;
 import java.util.*;
 
 public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
+
 	private Queue<E> list;
 
 	public FifoQueue() {
