@@ -56,11 +56,17 @@ public class TestFifoQueueAppend {
     public void twoNonEmptyQueues(){
         q1.offer("A");
         q1.offer("B");
+
         q2.offer("C");
         q2.offer("D");
         q1.append(q2);
         assertEquals("it should be 4", 4, q1.size());
         assertEquals("it should be 0", 0, q2.size());
+        assertEquals("it should be A", "A", q1.poll());
+        assertEquals("it should be B", "B", q1.poll());
+        assertEquals("it should be C", "C", q1.poll());
+        assertEquals("it should be D", "D", q1.poll());
+
 
     }
     @Test

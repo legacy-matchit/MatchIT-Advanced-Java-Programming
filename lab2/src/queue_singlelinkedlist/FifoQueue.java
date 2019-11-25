@@ -1,4 +1,5 @@
 package queue_singlelinkedlist;
+import javax.swing.text.html.HTMLDocument;
 import java.util.*;
 
 public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
@@ -111,10 +112,8 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 			QueueNode<E> qFirst = q.last.next;
 			q.last.next = last.next;
 			last.next = qFirst;
-		}else{
-			last = q.last;
 		}
-
+		last = q.last;
 		size += q.size;
 		q.size = 0;
 
