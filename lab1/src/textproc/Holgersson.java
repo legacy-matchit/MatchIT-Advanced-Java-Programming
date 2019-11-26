@@ -16,7 +16,7 @@ public class Holgersson {
 	public static void main(String[] args) throws FileNotFoundException {
 
 	    //testSingleWordCounter();
-	    testMultiWordCounter();
+	    //testMultiWordCounter();
 	    testGeneralWordCounter();
 
 	}
@@ -64,7 +64,7 @@ public class Holgersson {
 
     public static void testGeneralWordCounter() throws FileNotFoundException{
         /**D7 load from file for don't want to find words **/
-        Scanner scan = new Scanner(new File("undantagsord.txt"));
+        Scanner scan = new Scanner(new File("ndantagsord.txt"));
         Set<String> stopwords = new HashSet<>();
         while (scan.hasNext()){
             String word = scan.next();
