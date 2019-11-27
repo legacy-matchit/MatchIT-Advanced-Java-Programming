@@ -15,13 +15,14 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.*;
+import java.util.stream.Stream;
 
 public class BookReaderController extends Application {
 
     private ObservableList<Map.Entry<String,Integer>> words;
 
     public static void main(String[] args) {
-        launch(args);
+        Application.launch(args);
     }
 
     @Override
@@ -41,8 +42,9 @@ public class BookReaderController extends Application {
         alphabet.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                //words = FXCollections.observableArrayList(generalWordCounter.orderByKey());
-                Collections.sort(words,((o1, o2) -> o1.getKey().compareTo(o2.getKey())));
+                //words = words.sorted();
+                //Collections.sort(words,(o1, o2) -> o1.getKey().compareTo(o2.getKey()));
+                words.sort((o1, o2) -> o1.getKey().compareTo(o2.getKey()));
                 listView.setItems(words);
             }
         });
@@ -63,20 +65,31 @@ public class BookReaderController extends Application {
 
         Button find = new Button("Find");
         find.setPrefWidth(60);
-        find.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                String findWord = textField.getText();
-                for (Map.Entry<String,Integer> word: words) {
-                    if(word.getKey().equals(findWord)){
-                        int index = words.indexOf(word);
-                        listView.getSelectionModel().select(index);
-                        listView.scrollTo(index);
-                        return;
-                    }
+        /*find.setOnAction(actionEvent -> {
+            String findWord = textField.getText();
+            words.forEach(word ->{
+                if(word.getKey().equals(findWord)){
+                    int index = words.indexOf(word);
+                    listView.getSelectionModel().select(index);
+                    listView.scrollTo(index);
+                    return;
                 }
-            }
+            });
+        });*/
+
+        find.setOnAction(actionEvent -> {
+            String findWord = textField.getText();
+            words.stream().filter(word -> word.getKey().equals(findWord)).forEach(word ->{
+                int index = words.indexOf(word);
+                listView.getSelectionModel().select(index);
+                listView.scrollTo(index);
+                return;
+            });
         });
+
+
+
+
 
 
 
@@ -102,7 +115,7 @@ public class BookReaderController extends Application {
     private void process(GeneralWordCounter generalWordCounter){
         Scanner scan = loadFile("nilsholg.txt");
         scan.findWithinHorizon("\uFEFF", 1);
-        scan.useDelimiter("(\\s|,|\\.|:|;|!|\\?|'|\\\")+"); // se handledning
+        scan.useDelimiter("(\\s|,|\\.|:|;|!|\\?|'|\\\")+");// se handledning
         while (scan.hasNext()) {
             String findWord = scan.next().toLowerCase();
             generalWordCounter.process(findWord);
