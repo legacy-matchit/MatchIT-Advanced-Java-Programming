@@ -34,7 +34,7 @@ public abstract class Fractal {
 	 * @return a string representation of this fractal
 	 */
 	public String toString() {
-		return getTitle() + " ordning: " + order;
+		return getTitle() + " order: " + order;
 	}
 
 	/** Draws the fractal.  

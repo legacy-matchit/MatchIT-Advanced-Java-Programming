@@ -26,6 +26,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import koch.Koch;
+import mountain.Mountain;
 
 public class FractalApplication extends Application {
 	private Fractal[] fractals;
@@ -44,8 +45,9 @@ public class FractalApplication extends Application {
 
 	@Override
 	public void start(Stage stage) {
-		fractals = new Fractal[1];
-		fractals[0] = new Koch(300);	
+		fractals = new Fractal[2];
+		fractals[0] = new Mountain();
+		fractals[1] = new Koch(300);
 		actFractal = fractals[0];
 		BorderPane root = new BorderPane();
 		root.setBottom(addButtonBox());
@@ -53,13 +55,14 @@ public class FractalApplication extends Application {
 		root.setCenter(addDrawingArea());
 
 		stage.setScene(new Scene(root, fractalWidth, fractalHeight + 200));
-		stage.setTitle("Fraktaler");
+		stage.setTitle("Fractals");
 		stage.show();
 	}
 
+	//Menu
 	private MenuBar makeMenu() {
 		MenuBar menuBar = new MenuBar();
-		Menu fractalMenu = new Menu("Fraktaler");
+		Menu fractalMenu = new Menu("Fractals");
 		MenuItem[] menuItems = new MenuItem[fractals.length];
 		for (int i = 0; i < fractals.length; i++) {
 			menuItems[i]  = new MenuItem(fractals[i].getTitle());
@@ -135,7 +138,7 @@ public class FractalApplication extends Application {
 				try{
 				Platform.runLater(new Runnable() {
 					@Override public void run() {
-						labelStatus.setText("Ritar fraktalen");
+						labelStatus.setText("Draws the fractal");
 						canvasWrapper.getChildren().clear();
 					}
 				});
@@ -150,7 +153,7 @@ public class FractalApplication extends Application {
 				// modifying the javafx scene graph must be done from the javafx application thread
 				Platform.runLater(new Runnable() {
 					@Override public void run() {
-						labelStatus.setText("Klar, det tog " + (timeEnd - timeStart) + " milisekunder");
+						labelStatus.setText("Sure, it took " + (timeEnd - timeStart) + " milliseconds");
 						canvasWrapper.getChildren().add(canvas);
 					}
 				});
@@ -184,7 +187,7 @@ public class FractalApplication extends Application {
 							new EventHandler<ActionEvent>() {
 						@Override public void handle(ActionEvent actionEvent) {
 							if(tg != null){
-								setText("antal linjer: " + tg.getLineCount());
+								setText("total line: " + tg.getLineCount());
 							}
 						}
 					}

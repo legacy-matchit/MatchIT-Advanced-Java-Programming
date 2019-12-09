@@ -2,6 +2,8 @@ package koch;
 
 import fractal.*;
 
+import java.security.spec.RSAOtherPrimeInfo;
+
 public class Koch extends Fractal {
 	private int length;
 
@@ -18,7 +20,7 @@ public class Koch extends Fractal {
 	 * @return the title
 	 */
 	public String getTitle() {
-		return "Kochs triangel";
+		return "Koch’s triangle";
 	}
 
 	/** Draws the fractal.  
@@ -37,6 +39,18 @@ public class Koch extends Fractal {
 	 */
 	private void fractalLine(TurtleGraphics turtle, int order, double length, int alpha) {
 		//TODO
+		if (order == 0) {
+			turtle.setDirection(alpha);
+			turtle.forward(length);
+		} else {
+
+			fractalLine(turtle,order-1, length/3, alpha);
+			fractalLine(turtle,order-1, length/3, alpha-60);
+			fractalLine(turtle,order-1, length/3, alpha+60);
+			fractalLine(turtle,order-1, length/3, alpha);
+
+		}
+
 	}
 
 }
