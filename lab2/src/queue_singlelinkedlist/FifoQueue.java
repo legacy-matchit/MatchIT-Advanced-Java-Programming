@@ -28,12 +28,14 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 		 * last를 새로운노드로
 		 * if last가 null일때 라스트를 먼저 초**/
 		QueueNode<E> newNode = new QueueNode<>(e);
-		if(last == null){
+		if(last == null){//초기
 			last = newNode;
+			last.next = newNode;
+		}else{
+			newNode.next = last.next; // 뉴노드의 넥스트는 라스트의 넥스트(첫노드가됨)
+			last.next = newNode;// 라스트의 넥스트 새로운 노드로 지정
+			last = newNode; // 라스트를 새로운노드로 지정
 		}
-		newNode.next = last.next;
-		last.next = newNode;
-		last = newNode;
 
 		size++;
 
@@ -96,7 +98,7 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 	public void append(FifoQueue<E> q){
 
 		/** 동일객체허용안함**/
-		if(this.equals(q)){
+		if(this == q){
 			throw new IllegalArgumentException();
 		}
 		/**인자가 널인지 체크**/
@@ -110,13 +112,13 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 		 * 인자로넘어온 큐의 사이즈를 0으로**/
 		if(last != null){
 			QueueNode<E> qFirst = q.last.next;
-			q.last.next = last.next;
+			q.last.next = last.next;//q2의라스트 넥스트위치를 현재큐의 라스트넥스트(처음)으로 지정
 			last.next = qFirst;
 		}
 		last = q.last;
 		size += q.size;
 		q.size = 0;
-
+		q.last = null;
 		/*
 		while (q.iterator().hasNext()){
 			E ele = q.poll();
@@ -175,11 +177,11 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 			element = x;
 			next = null;
 		}
+
 	}
 
 	public String toString(){
 		StringBuilder str = new StringBuilder();
-		QueueNode<E> next = last.next;
 		str.append("[");
 		Iterator<E> it = iterator();
 		while (it.hasNext()){

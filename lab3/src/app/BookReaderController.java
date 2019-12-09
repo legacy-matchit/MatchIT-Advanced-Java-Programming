@@ -1,6 +1,7 @@
 package app;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,7 +27,15 @@ public class BookReaderController extends Application {
     }
 
     @Override
+
+    public void init(){
+        System.out.println("Init code");
+    }
+    public void stop(){
+        System.out.println("Stop save data");
+    }
     public void start(Stage primaryStage) throws Exception{
+        System.out.println("Start");
 
         /** data load and process **/
         GeneralWordCounter generalWordCounter = new GeneralWordCounter(getStopWords());
@@ -35,69 +44,43 @@ public class BookReaderController extends Application {
         /** get data from generalWordCounter **/
         words = FXCollections.observableArrayList(generalWordCounter.getWords());
 
+        //listView
         ListView<Map.Entry<String,Integer>> listView = new ListView<>(words);
 
+        //Alphabet button
         Button alphabet = new Button("Alphabet");
         alphabet.setPrefWidth(80);
-        alphabet.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                //words = words.sorted();
-                //Collections.sort(words,(o1, o2) -> o1.getKey().compareTo(o2.getKey()));
-                words.sort((o1, o2) -> o1.getKey().compareTo(o2.getKey()));
-                listView.setItems(words);
-            }
-        });
+        alphabet.setOnAction(actionEvent -> words.sort(Comparator.comparing(Map.Entry::getKey)));
 
+        //Frequency button
         Button frequency = new Button("Frequency");
         frequency.setPrefWidth(80);
-        frequency.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent actionEvent) {
-                //words = FXCollections.observableArrayList(generalWordCounter.orderByValue());
-                Collections.sort(words,(o1, o2) ->  o2.getValue()-o1.getValue());
-                listView.setItems(words);
-            }
-        });
+        frequency.setOnAction(actionEvent -> Collections.sort(words,(o1, o2) ->  o2.getValue()-o1.getValue()));
 
+        //TextField
         TextField textField = new TextField("find");
         textField.setPrefWidth(280);
 
+        //find button
         Button find = new Button("Find");
         find.setPrefWidth(60);
-        /*find.setOnAction(actionEvent -> {
-            String findWord = textField.getText();
-            words.forEach(word ->{
-                if(word.getKey().equals(findWord)){
-                    int index = words.indexOf(word);
-                    listView.getSelectionModel().select(index);
-                    listView.scrollTo(index);
-                    return;
-                }
-            });
-        });*/
-
         find.setOnAction(actionEvent -> {
+
             String findWord = textField.getText();
+
             words.stream().filter(word -> word.getKey().equals(findWord)).forEach(word ->{
-                int index = words.indexOf(word);
-                listView.getSelectionModel().select(index);
-                listView.scrollTo(index);
+                //Main thread
+                //int index = words.indexOf(word);
+                listView.getSelectionModel().select(word);
+                listView.scrollTo(word);
                 return;
             });
         });
 
 
 
-
-
-
-
         HBox hBox = new HBox();
-        hBox.getChildren().add(alphabet);
-        hBox.getChildren().add(frequency);
-        hBox.getChildren().add(textField);
-        hBox.getChildren().add(find);
+        hBox.getChildren().addAll(alphabet,frequency,textField,find);
 
         BorderPane root = new BorderPane();
         root.setCenter(listView);

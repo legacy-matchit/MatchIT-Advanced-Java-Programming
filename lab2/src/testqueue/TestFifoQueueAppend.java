@@ -69,6 +69,7 @@ public class TestFifoQueueAppend {
 
 
     }
+
     @Test
     public void mergeWithItSelf(){
         q1.offer("A");
@@ -79,5 +80,10 @@ public class TestFifoQueueAppend {
         } catch (IllegalArgumentException e) {
             // successful test
         }
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void mergeWithItself2(){
+        q1.append(q1);
     }
 }
