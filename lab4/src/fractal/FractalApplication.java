@@ -37,7 +37,7 @@ public class FractalApplication extends Application {
 	private Group canvasWrapper;
 
 	final double fractalWidth = 600;
-	final double fractalHeight = 600;
+	final double fractalHeight = 500;
 
 	public static void main(String[] args) {
 		Application.launch(args);
@@ -46,7 +46,7 @@ public class FractalApplication extends Application {
 	@Override
 	public void start(Stage stage) {
 		fractals = new Fractal[2];
-		fractals[0] = new Mountain();
+		fractals[0] = new Mountain(300);
 		fractals[1] = new Koch(300);
 		actFractal = fractals[0];
 		BorderPane root = new BorderPane();
