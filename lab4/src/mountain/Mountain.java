@@ -3,16 +3,18 @@ package mountain;
 import fractal.Fractal;
 import fractal.TurtleGraphics;
 
+import java.util.ArrayList;
+
 public class Mountain extends Fractal {
 
     private int length;
 
-    private Point[] vertexes;
+    private ArrayList<Point> vertexes;
 
     public Mountain(int length){
         super();
         this.length = length;
-        vertexes = new Point[9999];
+        vertexes = new ArrayList<>();
     }
 
 
@@ -32,7 +34,6 @@ public class Mountain extends Fractal {
         if(order == 0){
             int direction = -120;
             for (int i = 0; i < 3; i++){
-                vertexes[i] = new Point((int)turtle.getX(),(int)turtle.getY());
                 turtle.setDirection(direction);
                 direction+=120;
                 turtle.forward(length);
