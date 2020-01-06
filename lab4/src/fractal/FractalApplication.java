@@ -27,6 +27,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import koch.Koch;
 import mountain.Mountain;
+import mountain.Point;
 
 public class FractalApplication extends Application {
 	private Fractal[] fractals;
@@ -46,7 +47,7 @@ public class FractalApplication extends Application {
 	@Override
 	public void start(Stage stage) {
 		fractals = new Fractal[2];
-		fractals[0] = new Mountain(300);
+		fractals[0] = new Mountain(new Point(100,350), new Point(250,50), new Point(500,400));
 		fractals[1] = new Koch(300);
 		actFractal = fractals[0];
 		BorderPane root = new BorderPane();

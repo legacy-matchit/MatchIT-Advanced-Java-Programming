@@ -3,18 +3,17 @@ package mountain;
 import fractal.Fractal;
 import fractal.TurtleGraphics;
 
-import java.util.ArrayList;
-
 public class Mountain extends Fractal {
 
-    private int length;
+    private Point a;
+    private Point b;
+    private Point c;
 
-    private ArrayList<Point> vertexes;
-
-    public Mountain(int length){
+    public Mountain(Point a, Point b, Point c){
         super();
-        this.length = length;
-        vertexes = new ArrayList<>();
+        this.a = a;
+        this.b = b;
+        this.c = c;
     }
 
 
@@ -26,39 +25,34 @@ public class Mountain extends Fractal {
 
     @Override
     public void draw(TurtleGraphics turtle) {
-        turtle.moveTo(turtle.getWidth() / 2.0,
-                turtle.getHeight() / 2.0 - length/2);
-        drawMountain(turtle,order,length);
+        drawMountain(turtle,order,a,b,c);
     }
-    private void drawMountain(TurtleGraphics turtle,int order, double length){
+    private void drawMountain(TurtleGraphics turtle,int order, Point a,Point b, Point c){
         if(order == 0){
-            int direction = -120;
-            for (int i = 0; i < 3; i++){
-                turtle.setDirection(direction);
-                direction+=120;
-                turtle.forward(length);
-            }
+            turtle.moveTo(a.getX(),a.getY());
+            turtle.forwardTo(b.getX(),b.getY());
+            turtle.forwardTo(c.getX(),c.getY());
+            turtle.forwardTo(a.getX(),a.getY());
         }else{
-            drawMountain(turtle,order-1,length/2);
-            drawMountain(turtle,order-1,length/2);
-            drawMountain(turtle,order-1,length/2);
+
+            Point newA = getHarfPoint(a,b);
+            Point newB = getHarfPoint(a,c);
+            Point newC = getHarfPoint(b,c);
+
+            drawMountain(turtle,order-1,a,newA,newB);
+            drawMountain(turtle,order-1,newA,b,newC);
+            drawMountain(turtle,order-1,newB,newC,c);
+            drawMountain(turtle,order-1,newA,newB,newC);
         }
 
     }
     /*
      * Recursive method: Draws a recursive line of the triangle.
      */
-    private void fractalLine(TurtleGraphics turtle, int order, double length, int alpha) {
-        if (order == 0) {
-            turtle.setDirection(alpha);
-            turtle.forward(length);
-            System.out.println(alpha);
-        } else {
-            fractalLine(turtle,order-1, length/2, alpha);
-            fractalLine(turtle,order-1, length/2, alpha);
-            fractalLine(turtle,order-1, length/2, alpha);
-        }
-
+    private Point getHarfPoint(Point a, Point b) {
+        int x = a.getX() + (b.getX() - a.getX()) / 2;
+        int y = a.getY() + (b.getY() - a.getY()) / 2;
+        return new Point(x,y);
     }
 
 
