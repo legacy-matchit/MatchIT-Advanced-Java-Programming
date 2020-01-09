@@ -69,14 +69,19 @@ public class Sudoku {
         if(currentNum != 0){
             return solve(idx+1);
         }else{
-            for(int i = 1; i < 10; i++){
+            System.out.println("["+row+"]"+"["+col+"]" );
+            for(int i = 1; i < 10; i++){//1부터9까지 입력실
                 board[row][col] = i;
                 if(isValidSudoku()){
                     /**
                      * 정답을 찾을때 까지 리턴 트루일때
                      */
                     boolean solved = solve(idx+1);
-                    if(solved)return true; // 끝내고 나감
+                    if(solved) {
+
+                        return true; // 트루일때까지 반복
+                    }else{
+                    }
                 }
 
             }
