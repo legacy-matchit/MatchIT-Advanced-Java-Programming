@@ -58,6 +58,7 @@ public class Sudoku {
      */
     private boolean solve(int idx){
 
+
         if(idx==81){
             return true;
         }
@@ -66,24 +67,23 @@ public class Sudoku {
         int col = idx % 9;
         int currentNum = board[row][col];
 
+//        System.out.println("["+row+"]"+"["+col+"]"+":::"+idx );
+
         if(currentNum != 0){
             return solve(idx+1);
         }else{
-            System.out.println("["+row+"]"+"["+col+"]" );
             for(int i = 1; i < 10; i++){//1부터9까지 입력실
                 board[row][col] = i;
                 if(isValidSudoku()){
                     /**
-                     * 정답을 찾을때 까지 리턴 트루일때
+                     * 정답을 찾을때 까지 리턴 트루일때까지 반복
                      */
                     boolean solved = solve(idx+1);
                     if(solved) {
-
                         return true; // 트루일때까지 반복
                     }else{
                     }
                 }
-
             }
             board[row][col] = 0;
             return false;
