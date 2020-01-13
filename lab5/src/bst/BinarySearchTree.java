@@ -7,7 +7,6 @@ import java.util.Comparator;
 public class BinarySearchTree<E extends Comparable<? super E>> {
 	BinaryNode<E> root;
     int size;
-    E[] a;
 	/**
 	 * Constructs an empty binary searchtree.
 	 */
@@ -60,8 +59,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		return true;
 	}
 
-
-
 	
 	/**
 	 * Computes the height of tree.
@@ -108,10 +105,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Builds a complete tree from the elements in the tree.
 	 */
 	public void rebuild() {
-		//(root.element.class())[] a = new (root.element.getClass())[size];
-		a = (E[])new Comparable[size];
+		E[] a = (E[])new Comparable[size];
 		toArray(root,a,0);
-
+		System.out.println(Arrays.toString(a));
+		root = buildTree(a,0,size-1);
 	}
 	
 	/*
@@ -124,7 +121,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		if(n != null){
 			toArray(n.left,a,index);
 			a[index] = n.element;
-			toArray(n.right,a,index);
+			toArray(n.right,a,index+1);
 		}
 		return index;
 	}
@@ -135,7 +132,17 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Returns the root of tree.
 	 */
 	private BinaryNode<E> buildTree(E[] a, int first, int last) {
-		return null;
+
+		if(first > last){
+			return null;
+		}
+		int mid = (first + last) / 2;
+		BinaryNode<E> node = new BinaryNode<>(a[mid]);
+		System.out.println("mid:" + (mid-1) + " last :" + (mid+1) );
+		node.left = buildTree(a,first,mid-1);
+		node.right = buildTree(a,mid+1,last);
+
+		return node;
 	}
 	
 

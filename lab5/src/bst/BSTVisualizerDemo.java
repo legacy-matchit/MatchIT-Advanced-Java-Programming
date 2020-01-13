@@ -5,50 +5,69 @@ import java.util.TreeSet;
 
 public class BSTVisualizerDemo {
 
-    public static class book implements Comparable<book> {
 
-
-
-        @Override
-        public int hashCode() {
-            return super.hashCode();
+    public static class Book implements Comparable<Book>  {
+        private String name;
+        public Book(String name){
+            this.name = name;
         }
 
         @Override
-        public boolean equals(Object obj) {
-            return super.equals(obj);
+        public int compareTo(Book o) {
+            return name.compareTo(o.name);
         }
-
-        @Override
-        public int compareTo(book o) {
-            return 0;
+        public String toString(){
+            return name;
         }
     }
     public static void main(String[] args){
 
-        TreeSet<Book> treeSet = new TreeSet<>();
-        treeSet.add(new Book());
+        /*TreeSet<Book> treeSet = new TreeSet<>();
+        treeSet.add(new Book("A"));*/
+        TreeSet<String> tSet = new TreeSet<>();
+        tSet.add("A");
 
-        BinarySearchTree<Book> bst = new BinarySearchTree<Book>();
-       /* bst.add(3);
-        bst.add(4);
+        BinarySearchTree<Book> bst = new BinarySearchTree<>();
+
+
+        bst.add(new Book("A"));
+        bst.add(new Book("B"));
+        bst.add(new Book("C"));
+        bst.add(new Book("D"));
+        bst.add(new Book("E"));
+        bst.add(new Book("F"));
+        bst.add(new Book("H"));
+        bst.add(new Book("I"));
+        bst.add(new Book("J"));
+
+        /*
+        bst.add(1);
+        bst.add(3);
         bst.add(5);
-        bst.add(6);
         bst.add(7);
-        bst.add(14);
-        bst.add(22);
-        bst.add(24);
-        bst.add(25);
-        bst.add(26);
-        bst.add(28);
-        bst.add(30);
-        bst.add(40);
-        bst.add(50);
-        bst.add(66);
-        bst.printTree();
+        bst.add(9);
+        bst.add(11);
+        bst.add(13);*/
+/*
+        bst.add("a");
+        bst.add("c");
+        bst.add("d");
+        bst.add("f");
+        bst.add("h");
+        bst.add("i");
+        bst.add("k");*/
+
+        BSTVisualizer bstVisualizer = new BSTVisualizer("Before Rebuild",300,300);
+        bstVisualizer.drawTree(bst);
+
+
+        System.out.println("Before Rebuild Height : " + bst.height());
+        //bst.printTree();
         bst.rebuild();
-        BSTVisualizer bstVisualizer = new BSTVisualizer("BSTVisualizer",500,500);
-        bstVisualizer.drawTree(bst);*/
+        System.out.println("After Rebuild Height : " + bst.height());
+
+        BSTVisualizer bstVisualizer2 = new BSTVisualizer("After Rebuild",300,300);
+        bstVisualizer2.drawTree(bst);
     }
 
 }

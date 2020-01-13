@@ -62,7 +62,7 @@ public class Mountain extends Fractal {
         }else{
             int x = a.getX() + (b.getX() - a.getX()) / 2;
             int y = a.getY() + (b.getY() - a.getY()) / 2;
-            y+=RandomUtilities.randFunc(dev);
+            //y+=RandomUtilities.randFunc(dev);
 
             Point p = new Point(x,y);
             midPoints.put(new Side(a,b),p);
