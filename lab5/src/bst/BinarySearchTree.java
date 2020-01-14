@@ -4,13 +4,36 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Comparator;
 
-public class BinarySearchTree<E extends Comparable<? super E>> {
+/**E extends Comparable<? super E> compareTo 구현 안되있으면 컴파일 에러 추천방법 **/
+//<E extends Comparable<? super E>> : 수퍼클래스 또는 서브 클래스에서 구현되어있어야함 컴파일 에러
+//((Comparable)e1).compareTo(e2) : Comparable 인터페이스 타입으로 캐스팅 해주어야함 그냥 <E>로 선언했을때
+//E[] a = (E[])new Object[size] : 그냥 <E>로만 선언 되었을땐 괜찮음.
+//E[] a = (E[])new Comparable[size] : <E extends Comparable<? super E>>로 선언되었을땐 Comparable 로 구현해야함.
+//Comparable 인터페이스는 엘레멘트 클래스<커스텀클래스> 안에서 구현 예)String, Integer..등 클래스는 이미구현되어있음
+//Comparator 인터페이스는 ADT 타입으로 인스턴스 만들어서 compare 메소드를 구현 해야함
+//public class BinarySearchTree<E extends Comparable<? super E>> {
+
+public class BinarySearchTree<E>{
+
 	BinaryNode<E> root;
-    int size;
+    Comparator<E> comp;
+	int size;
+
+
 	/**
 	 * Constructs an empty binary searchtree.
 	 */
 	public BinarySearchTree() {
+		size = 0;
+		root = null;
+	}
+
+	/**
+	 * Constructs with Comparator Interface
+	 * @param comp
+	 */
+	public BinarySearchTree(Comparator<E> comp){ //오버로딩
+		this.comp = comp;
 		size = 0;
 		root = null;
 	}
@@ -37,26 +60,35 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 
 	private boolean addNode(BinaryNode<E>root, BinaryNode<E> child){
 
-		if (root.element.compareTo(child.element) == 0){
-			return false;
-		}
+		int compareResult = compareElement(child.element,root.element);
 
-		if(child.element.compareTo(root.element) < 0){
+		if(compareResult < 0){
 			if(root.left == null){
 				root.left = child;
 				size++;
 			}else{
 				addNode(root.left,child);
 			}
-		}else if(child.element.compareTo(root.element) > 0) {
+		}else if(compareResult > 0) {
 			if(root.right == null){
 				root.right = child;
 				size++;
 			}else{
 				addNode(root.right,child);
 			}
+		}else{
+			return false;
 		}
 		return true;
+	}
+	private int compareElement(E e1,E e2){
+		if(comp == null){
+			return ((Comparable)e1).compareTo(e2);
+			//return e1.compareTo(e2);
+
+		}else{
+			return comp.compare(e1,e2);
+		}
 	}
 
 	
@@ -105,8 +137,10 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	 * Builds a complete tree from the elements in the tree.
 	 */
 	public void rebuild() {
-		E[] a = (E[])new Comparable[size];
-		toArray(root,a,0);
+		//E[] a = (E[])new Comparable[size];
+		E[] a = (E[])new Object[size];
+
+		System.out.println(toArray(root,a,0));
 		System.out.println(Arrays.toString(a));
 		root = buildTree(a,0,size-1);
 	}
@@ -121,7 +155,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		if(n != null){
 			toArray(n.left,a,index);
 			a[index] = n.element;
-			toArray(n.right,a,index+1);
+			return toArray(n.right,a,index+1);
 		}
 		return index;
 	}
@@ -138,10 +172,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		}
 		int mid = (first + last) / 2;
 		BinaryNode<E> node = new BinaryNode<>(a[mid]);
-		System.out.println("mid:" + (mid-1) + " last :" + (mid+1) );
 		node.left = buildTree(a,first,mid-1);
 		node.right = buildTree(a,mid+1,last);
-
 		return node;
 	}
 	
