@@ -9,4 +9,5 @@ module Sudoku {
     requires junit;
 
     opens sudoku;
+    opens testSudoku;
 }
