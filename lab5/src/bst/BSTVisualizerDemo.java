@@ -1,27 +1,35 @@
 package bst;
 
+import java.awt.print.Book;
+
 public class BSTVisualizerDemo {
 
 
-    public static class Fiction extends Book{
+    //extends Comparable<? super E>
+    public static class Fiction extends Book {
 
         public Fiction(String name, int isbn) {
             super(name, isbn);
         }
+        /*
+        @Override
+        public int compareTo(Fiction o) {
+            return super.name.compareTo(o.name);
+        }*/
     }
     //public static class Book implements Comparable<Book>  {
-    public static class Book{
+    public static class Book implements Comparable<Book>{
         protected String name;
         protected int isbn;
         public Book(String name,int isbn){
             this.name = name;
             this.isbn = isbn;
         }
-        /*
+
         @Override
         public int compareTo(Book o) {
             return name.compareTo(o.name);
-        }*/
+        }
 
         public String toString(){
             return name + ":" + isbn;
