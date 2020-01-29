@@ -186,8 +186,10 @@ public class FifoQueue<E> extends AbstractQueue<E> implements Queue<E> {
 		Iterator<E> it = iterator();
 		while (it.hasNext()){
 			str.append(it.next()+",");
+			if(!it.hasNext()){
+				str.deleteCharAt(str.length()-1);
+			}
 		}
-		str.deleteCharAt(str.length()-1);
 		str.append("]");
 		return str.toString();
 	}

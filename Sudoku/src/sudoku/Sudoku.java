@@ -1,6 +1,7 @@
 package sudoku;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 public class Sudoku {
 
@@ -97,36 +98,34 @@ public class Sudoku {
      */
     private boolean isValidSudoku(){
 
-        boolean[] checkers = new boolean[9];
 
-        for (int k = 0; k < 3; k++){
+        String[] rule = {"check row","check col","check subGrid"};
+
+        for (int k = 0; k < rule.length; k++){
 
             for(int i = 0; i < 9; i++){
 
-                //before check fill false
-                Arrays.fill(checkers,false);
+                HashSet<Integer> set = new HashSet<>();
 
                 int currentNum;
 
                 for(int j = 0; j < 9; j++){
 
-                    if(k==0){
+                    if(rule[k].compareTo("check row") == 0){
                         //check row
                         currentNum = board[i][j];
-                    }else if(k==1){
+                    }else if(rule[k].compareTo("check col") == 0){
                         //check col
                         currentNum = board[j][i];
-                    }else {
+                    }else{
                         //check sub grid
                         currentNum = board[i/3*3 + j/3][i%3*3 + j%3];
                     }
 
-                    if(currentNum != 0){
-                        if(checkers[currentNum-1]){
-                            return false;
-                        }
-                        checkers[currentNum-1] = true;
-                    };
+
+                    if(currentNum != 0 && !set.add(currentNum)){
+                        return false;
+                    }
 
                 }
             }
@@ -134,6 +133,8 @@ public class Sudoku {
 
         return true;
     }
+
+
 
     /**
      * Debugging for board
