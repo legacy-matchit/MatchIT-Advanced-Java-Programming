@@ -1,5 +1,8 @@
 package sudoku;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class DemoSudoku {
     public static void main(String[] args){
         int [][] board = new int[][] {
@@ -14,5 +17,7 @@ public class DemoSudoku {
                 { 0, 0, 0, 0, 0, 0, 0, 0, 0 } };
         Sudoku sudoku = new Sudoku(board);
         System.out.println(sudoku.solveSudoku());
+
+        Map<String,String> map = new HashMap<>();
     }
 }
